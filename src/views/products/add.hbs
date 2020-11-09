@@ -1,0 +1,151 @@
+<div class="container mx-auto p-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/products/add" method="POST">
+
+                        <div class="form-group">
+                            <label>Referencia del Producto</label>
+                            <input type="text" name="reference" onkeyup="previewReference(this.value)" maxlength="130"
+                                required class="form-control" placeholder="Referencia">                                
+                        </div>
+
+                        <div class="form-group">
+                            <label>Seleccione una Categoria:</label>
+                            <select class="form-control" onchange="previewCategory();" required name="category" id="sel1">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Unidades del producto</label>
+                            <input type="number" name="cant" id="cant" required min="0" max="999999999999" step="any"
+                                class="form-control" placeholder="99.99">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Valor Neto por (Unidad)</label>
+                            <input type="number" name="value_neto" id="value_neto" required pattern="^\d+(\.\d{1,2})?$" min="0"
+                                max="9999999999999999999" step="any" class="form-control" placeholder=" Eje: $ 99.99">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Costo de Transporte (Unidad)</label>
+                            <input type="number" name="value_transport" id="value_transport" required min="0" max="9999999999999999999"
+                                step="any" class="form-control" placeholder=" Eje: $ 99.99">
+                        </div>
+
+                         <div class="form-group">
+                            <label>Porcentaje de Ganancia</label>
+                            <input type="number" name="profit" id="profit" required min="0" max="9999999999999999999"
+                                step="any" class="form-control" placeholder=" Eje: 12.22 %">
+                        </div>
+
+
+                        <div class="form-group">
+                            <textarea name="description" rows="2" class="form-control"
+                                placeholder="Description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success btn-block">
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+         <div class="card">
+            <div class="card-body">
+
+                <div class="my-4">
+                <label>Referencia del Producto</label>
+                <div id="referencePrev"></div>
+                </div>
+
+                <hr align="left" noshade="noshade" size="2" width="100%" />
+
+                <div class="my-4">
+                <label>Categoria de Producto</label>
+                <div id="categoryPrev"></div>
+                </div>
+
+                <hr align="left" noshade="noshade" size="2" width="100%" />
+
+                <div class="my-4">
+                <label>Costo Total de Transporte</label>
+                <div id="transportPrev"></div>
+                </div>
+
+                 <hr align="left" noshade="noshade" size="2" width="100%" />
+
+                <div class="my-4">
+                <label>Total Unitario Neto</label>
+                <div id="netoTotalUnitPrev"></div>
+                </div>
+
+                <hr align="left" noshade="noshade" size="2" width="100%" />
+
+                <div class="my-4">
+                <label>Valor Total Neto</label>
+                <div id="netoTotalPrev"></div>
+                </div>
+
+                <hr align="left" noshade="noshade" size="2" width="100%" />
+
+                <div class="my-4">
+                <label>Total Ganancia</label>
+                <div id="totalProfitPrev"></div>
+                </div>
+
+                <hr align="left" noshade="noshade" size="2" width="100%" />
+
+                <div class="my-4">
+                <label> Precio de Venta</label>
+                <div id="priceSellPrev"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+
+    function previewReference(texto) {
+        if( texto == '' ) texto = 'N/A';
+        document.getElementById('referencePrev').innerHTML = texto;
+    }
+
+    function previewCategory() {
+        var option = document.getElementById('sel1').value;
+        document.getElementById('categoryPrev').innerHTML = option;
+    }
+
+     window.addEventListener('keyup',function (event) {
+        var cant = document.getElementById('cant').value;
+        var costTransport = document.getElementById('value_transport').value;
+        var value_neto = document.getElementById('value_neto').value;
+        var profit = document.getElementById('profit').value;
+        var totalNeto = ((cant * value_neto) + (costTransport * cant));
+        document.getElementById('netoTotalPrev').innerHTML = (cant * value_neto) + (costTransport * cant);
+        document.getElementById('transportPrev').innerHTML = costTransport * cant;
+        document.getElementById('netoTotalUnitPrev').innerHTML = ((cant * value_neto) + (costTransport * cant)) / cant;
+        document.getElementById('totalProfitPrev').innerHTML = (((cant * value_neto) + (costTransport * cant)) * (profit / 100));
+        document.getElementById('priceSellPrev').innerHTML = ((totalNeto / cant) * (profit / 100)) + (totalNeto / cant);
+
+
+    },false);
+   
+
+</script>

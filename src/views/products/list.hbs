@@ -1,0 +1,38 @@
+<div class="container p-4">
+    <div class="row">
+        {{#each products}}
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                        <h3 class="card-title text-uppercase">
+                            {{reference}}
+                        </h3>
+                    </a>
+                    <p class="m-2">Tipo: {{category}}</p>
+                    <p class="m-2">Unidades: {{cant}}</p>
+                    <p class="m-2">$  {{value_neto}}</p>
+                    <p class="m-2">$  {{value_transport}}</p>
+                     <p class="m-2">Descripción {{description}}</p>
+
+                    <p class="text-muted">
+                        {{timeago created_at}}
+                    </p>
+                    <a class="btn btn-danger" href="/products/delete/{{id}}">
+                        Eliminar Producto
+                    </a>
+                    <a class="btn btn-secondary" href="/products/edit/{{id}}">
+                        Editar
+                    </a>
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <div class="col-md-4 mx-auto">
+            <div class="card card-body text-center">
+                <p>There are not Links saved yet.</p>
+                <a href="/products/add">Create One!</a>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
